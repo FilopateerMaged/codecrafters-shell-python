@@ -15,6 +15,8 @@ def main():
         elif user_input.startswith("type "):
             if user_input.strip()[5:] in builtins:
                 print(user_input.strip()[5:] + " is a shell builtin")
+            else:
+                print(user_input.strip()[5:] + " is not a shell builtin")
         else:
             print(user_input.strip() + ": command not found")
 
