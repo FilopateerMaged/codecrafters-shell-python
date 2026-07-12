@@ -8,7 +8,10 @@ def main():
         user_input = sys.stdin.readline()
         if user_input.strip() == "exit":
             break
-        print(user_input.strip() + ": command not found")
+        if user_input.startswith("echo "):
+            print(user_input.strip()[5:])
+        else:
+            print(user_input.strip() + ": command not found")
 
         pass
 
