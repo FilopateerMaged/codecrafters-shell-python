@@ -3,10 +3,14 @@ import sys
 
 def main():
     # TODO: Uncomment the code below to pass the first stage
-    while True:
+    loop = True
+    while loop == True:
         sys.stdout.write("$ ")
         user_input = sys.stdin.readline()
-        print(user_input.strip() + ": command not found")
+        if user_input.strip() == "exit":
+            loop = False
+        else:
+            print(user_input.strip() + ": command not found")
 
         pass
 
