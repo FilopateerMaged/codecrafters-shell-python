@@ -41,6 +41,7 @@ def check_path(command):
         
 def run_executable(command):
     command_parts = command.strip().split()
+    print(command_parts[0])
     if not check_path(command_parts[0]):
         print(command_parts[0] + ": command not found")
     else:
