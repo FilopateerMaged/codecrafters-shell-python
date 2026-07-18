@@ -2,8 +2,16 @@ import os
 import sys
 import subprocess
 
-builtins = ["echo", "exit", "type"]
+builtins = ["echo", "exit", "type","pwd"]
+bullitins_actions = {
+    "echo": lambda args: print(" ".join(args)),
+    "exit": lambda args: sys.exit(0),
+    "pwd": lambda args: print(current_directory()),
+    "type": lambda args: check_builtins("type " + " ".join(args))
+}
 
+
+### Base Shell
 
 def read_input():
     sys.stdout.write("$ ")
@@ -12,12 +20,11 @@ def read_input():
     return command
 
 def execute_command(command):
-    if command.startswith("echo "):
-        print(command.strip()[5:])
-    elif command.startswith("exit"):
-        exit_shell()
-    elif command.startswith("type "):
-        check_builtins(command)
+    if command.strip() == "":
+        return
+    command_parts = command.strip().split()
+    if command_parts[0] in builtins:
+        bullitins_actions[command_parts[0]](command_parts[1:])
     else:
         run_executable(command.strip())
     
@@ -49,10 +56,13 @@ def run_executable(command):
         # print("Program was passed " + str(len(command_parts)) + " args (including program name).")
         subprocess.run(command_parts)
 
-
-
 def exit_shell():
     sys.exit(0)
+
+## Navigation 
+
+def current_directory():
+    return os.getcwd()
 
 
 
