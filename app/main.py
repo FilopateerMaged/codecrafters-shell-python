@@ -1,3 +1,4 @@
+import os
 import sys
 
 
@@ -16,7 +17,13 @@ def main():
             if user_input.strip()[5:] in builtins:
                 print(user_input.strip()[5:] + " is a shell builtin")
             else:
-                print(user_input.strip()[5:] + ": not found")
+                for dir in os.environ["PATH"].split(os.pathsep):
+                    print("i'm in" , dir, "searching for", user_input.strip()[5:])
+                    if os.path.isfile(os.path.join(dir, user_input.strip()[5:])):
+                        print(user_input.strip()[5:] + " is " + os.path.join(dir, user_input.strip()[5:]))
+                        break
+                else:
+                    print(user_input.strip()[5:] + ": not found")
         else:
             print(user_input.strip() + ": command not found")
 
