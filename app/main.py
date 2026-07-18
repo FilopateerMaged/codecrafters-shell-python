@@ -18,8 +18,8 @@ def execute_command(command):
     elif command.startswith("type "):
         check_builtins(command)
     else:
-        if not check_path(command.strip()):
-            print(command.strip() + ": not found")
+        run_executable(command.strip())
+    
 
 def check_builtins(command):
     if command.startswith("type "):
@@ -36,6 +36,15 @@ def check_path(command):
             print(command.strip() + " is " + file)
         else:
             return False
+
+        
+def run_executable(command):
+    command_parts = command.strip().split()
+    if not check_path(command_parts[0]):
+        print(command_parts[0] + ": command not found")
+    else:
+        os.execv(command_parts[0], command_parts)
+
 
 def exit_shell():
     return False
