@@ -19,8 +19,9 @@ def main():
             else:
                 for dir in os.environ["PATH"].split(os.pathsep):
                     # print("i'm in" , dir, "searching for", user_input.strip()[5:])
-                    if os.path.isfile(os.path.join(dir, user_input.strip()[5:])):
-                        print(user_input.strip()[5:] + " is " + os.path.join(dir, user_input.strip()[5:]))
+                    file = os.path.join(dir, user_input.strip()[5:])
+                    if os.path.isfile(file) and os.access(file, os.X_OK):
+                        print(user_input.strip()[5:] + " is " + file)
                         break
                 else:
                     print(user_input.strip()[5:] + ": not found")
