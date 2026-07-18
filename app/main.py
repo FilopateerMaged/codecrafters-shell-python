@@ -52,7 +52,7 @@ def run_executable(command):
 
 
 def exit_shell():
-    return False
+    sys.exit(0)
 
 
 
