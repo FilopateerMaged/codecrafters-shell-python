@@ -1,5 +1,6 @@
 import os
 import sys
+import subprocess
 
 builtins = ["echo", "exit", "type"]
 
@@ -45,7 +46,7 @@ def run_executable(command):
     if not file_path:
         print(command_parts[0] + ": command not found")
     else:
-        os.subprocess.run([file_path] + command_parts[1:])
+        subprocess.run([file_path] + command_parts[1:])
         print("Program was passed " + str(len(command_parts)) + " args (including program name).")
 
 
