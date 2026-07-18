@@ -34,6 +34,7 @@ def check_path(command):
         file = os.path.join(dir, command.strip())
         if os.path.isfile(file) and os.access(file, os.X_OK):
             print(command.strip() + " is " + file)
+            return file
         else:
             return False
 
@@ -43,7 +44,10 @@ def run_executable(command):
     if not check_path(command_parts[0]):
         print(command_parts[0] + ": command not found")
     else:
-        os.execv(command_parts[0], command_parts)
+        file_path = check_path(command_parts[0])
+        print("Program was passed " + str(len(command_parts)) + " args (including program name)")
+        os.execv(file_path, command_parts)
+
 
 
 def exit_shell():
