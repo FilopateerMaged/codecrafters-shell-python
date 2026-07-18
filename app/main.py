@@ -1,35 +1,55 @@
 import os
 import sys
 
+builtins = ["echo", "exit", "type"]
+
+
+def read_input():
+    sys.stdout.write("$ ")
+    sys.stdout.flush()
+    command = sys.stdin.readline()
+    return command
+
+def execute_command(command):
+    if command.startswith("echo "):
+        print(command.strip()[5:])
+    elif command.startswith("exit"):
+        exit_shell()
+    elif command.startswith("type "):
+        check_builtins(command)
+    else:
+        if not check_path(command.strip()):
+            print(command.strip() + ": not found")
+
+def check_builtins(command):
+    if command.startswith("type "):
+        if command.strip()[5:] in builtins:
+            print(command.strip()[5:] + " is a shell builtin")
+        else:
+            if not check_path(command.strip()[5:]):
+                print(command.strip()[5:] + ": not found")
+
+def check_path(command):
+    for dir in os.environ["PATH"].split(os.pathsep):
+        file = os.path.join(dir, command.strip())
+        if os.path.isfile(file) and os.access(file, os.X_OK):
+            print(command.strip() + " is " + file)
+        else:
+            return False
+
+def exit_shell():
+    return False
+
+
 
 def main():
     # TODO: Uncomment the code below to pass the first stage
-    builtins = ["echo", "exit", "type"]
 
     while True:
-        sys.stdout.write("$ ")
-        user_input = sys.stdin.readline()
-        if user_input.strip() == "exit":
-            break
-        elif user_input.startswith("echo "):
-            print(user_input.strip()[5:])
-        elif user_input.startswith("type "):
-            if user_input.strip()[5:] in builtins:
-                print(user_input.strip()[5:] + " is a shell builtin")
-            else:
-                for dir in os.environ["PATH"].split(os.pathsep):
-                    # print("i'm in" , dir, "searching for", user_input.strip()[5:])
-                    file = os.path.join(dir, user_input.strip()[5:])
-                    if os.path.isfile(file) and os.access(file, os.X_OK):
-                        print(user_input.strip()[5:] + " is " + file)
-                        break
-                else:
-                    print(user_input.strip()[5:] + ": not found")
-        else:
-            print(user_input.strip() + ": command not found")
+        user_input = read_input()
+        execute_command(user_input)
+            
 
-        pass
-
-
+# 
 if __name__ == "__main__":
     main()
