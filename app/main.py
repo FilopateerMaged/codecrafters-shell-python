@@ -29,18 +29,19 @@ def check_builtins(command):
             if not check_path(command.strip()[5:]):
                 print(command.strip()[5:] + ": not found")
 
-def check_path(command):
+def check_path(command,silent=False):
     for dir in os.environ["PATH"].split(os.pathsep):
         file = os.path.join(dir, command.strip())
         if os.path.isfile(file) and os.access(file, os.X_OK):
-            print(command.strip() + " is " + file)
+            if not silent:
+                print(command.strip() + " is " + file)
             return file
     return False
 
         
 def run_executable(command):
     command_parts = command.strip().split()
-    file_path = check_path(command_parts[0])
+    file_path = check_path(command_parts[0], silent=True)
     if not file_path:
         print(command_parts[0] + ": command not found")
     else:
