@@ -46,8 +46,8 @@ def run_executable(command):
     if not file_path:
         print(command_parts[0] + ": command not found")
     else:
-        subprocess.run(command_parts)
         print("Program was passed " + str(len(command_parts)) + " args (including program name).")
+        subprocess.run(command_parts)
 
 
 
