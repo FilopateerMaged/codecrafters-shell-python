@@ -18,7 +18,7 @@ def main():
                 print(user_input.strip()[5:] + " is a shell builtin")
             else:
                 for dir in os.environ["PATH"].split(os.pathsep):
-                    # print("i'm in" , dir, "searching for", user_input.strip()[5:])
+                    print("i'm in" , dir, "searching for", user_input.strip()[5:])
                     if os.path.isfile(os.path.join(dir, user_input.strip()[5:])):
                         print(user_input.strip()[5:] + " is " + os.path.join(dir, user_input.strip()[5:]))
                         break
