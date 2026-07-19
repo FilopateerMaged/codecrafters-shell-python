@@ -2,12 +2,13 @@ import os
 import sys
 import subprocess
 
-builtins = ["echo", "exit", "type","pwd"]
+builtins = ["echo", "exit", "type","pwd","cd"]
 bullitins_actions = {
     "echo": lambda args: print(" ".join(args)),
     "exit": lambda args: sys.exit(0),
     "pwd": lambda args: print(current_directory()),
-    "type": lambda args: check_builtins("type " + " ".join(args))
+    "type": lambda args: check_builtins("type " + " ".join(args)),
+    "cd": lambda args: os.chdir(args[0]) if os.path.isdir(args[0]) else print(f"cd: {args[0]}: No such file or directory")
 }
 
 
