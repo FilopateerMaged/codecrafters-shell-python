@@ -8,7 +8,7 @@ bullitins_actions = {
     "exit": lambda args: sys.exit(0),
     "pwd": lambda args: print(current_directory()),
     "type": lambda args: check_builtins("type " + " ".join(args)),
-    "cd": lambda args: os.chdir(args[0]) if os.path.isdir(args[0]) else print(f"cd: {args[0]}: No such file or directory")
+    "cd": lambda args: os.chdir(args[0]) if os.path.isdir(args[0]) else os.chdir(os.path.expanduser("~")) if args[0] == "~" else print(f"cd: {args[0]}: No such file or directory")
 }
 
 
@@ -31,7 +31,6 @@ def execute_command(command):
     
 
 def check_builtins(command):
-    if command.startswith("type "):
         if command.strip()[5:] in builtins:
             print(command.strip()[5:] + " is a shell builtin")
         else:
@@ -56,9 +55,6 @@ def run_executable(command):
     else:
         # print("Program was passed " + str(len(command_parts)) + " args (including program name).")
         subprocess.run(command_parts)
-
-def exit_shell():
-    sys.exit(0)
 
 ## Navigation 
 
